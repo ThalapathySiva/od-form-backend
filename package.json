@@ -2,15 +2,17 @@
   "name": "od-form-back-end",
   "version": "1.0.0",
   "description": "Backend for OD-Form Registration",
-  "main": "index.js",
+  "main": "/src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch 'src /**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node src/index.ts'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
