@@ -9,4 +9,4 @@ app.use(cors())
 app.get('/', (req, res) => res.send("Helo"))
 app.use('/user', route)
 
-app.listen(3000, () => console.log("server started"))
+app.listen(process.env.PORT || 3000, () => console.log("server started"))
