@@ -1,6 +1,6 @@
 import *as express from 'express';
 import { route } from '../route/user_route';
-const cors = require('cors')
+import cors = require('cors');
 
 const app = express()
 app.use(express.json())
