@@ -1,7 +1,6 @@
-import *as express from 'express'
 import { Response, Request } from 'express'
 import { User } from '../models/user-model';
-import { UserService } from '../services/user-services';
+import { RegisterType, UserService } from '../services/user-services';
 
 export class UserController {
 
@@ -9,8 +8,8 @@ export class UserController {
 
 
     register = async (req: Request, res: Response) => {
-        const user: User = req.body;
-        const registerResponse = await this.service.register(user)
+        let reqData: RegisterType = req.body;
+        const registerResponse = await this.service.registerUser(reqData)
         res.send(registerResponse)
     }
 
@@ -19,7 +18,8 @@ export class UserController {
     }
 
     getUser = async (req: Request, res: Response) => {
-
+        const getUserResponse = await this.service.getUser()
+        res.send(getUserResponse)
     }
 
     getUserDetail = async (req: Request, res: Response) => {

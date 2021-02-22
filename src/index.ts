@@ -1,6 +1,7 @@
 require('dotenv').config()
 import *as express from 'express';
-import { route } from './route/user-route'
+import { userRoute } from './route/user-route'
+import { staffRoute } from './route/staff-route'
 import *as cors from 'cors'
 import *as mongoose from 'mongoose'
 
@@ -13,6 +14,7 @@ app.use(express.json())
 app.use(cors())
 
 
+
 ///DB
 mongoose.connect(process.env.DEV_DB_URL, {
     useNewUrlParser: true,
@@ -21,9 +23,9 @@ mongoose.connect(process.env.DEV_DB_URL, {
 })
 mongoose.connection.once("open", () => console.log("DB CONNECTED"))
 
-
 /// Routes
-app.use('', route)
+app.use('', userRoute)
+app.use('', staffRoute)
 
 
 /// Starting Server

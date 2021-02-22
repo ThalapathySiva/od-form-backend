@@ -1,44 +1,57 @@
-import *as express from 'express'
 import { User } from '../models/user-model'
 
 export class UserService {
 
-    samplejson = [
-        {
-            name: "siva",
-            id: 10,
-            email: "agksngjns@dfkbn.com"
-        },
-        {
-            name: "ram",
-            id: 11,
-            email: "ijfini@dfkbn.com"
-        },
-        {
-            name: "thalapathy",
-            id: 12,
-            email: "pajfpaf@dfkbn.com"
-        }
-    ]
 
-    register = async (user: User) => {
-        this.samplejson.forEach((element) => {
-            if (element.name == user.name) {
-                return "User found"
-            }
-        })
+    registerUser = async (requestData: RegisterType) => {
+        try {
+            let reqUser = new User({
+                name: requestData.name,
+                email: requestData.email,
+                password: requestData.password,
+            })
+            let user = await reqUser.save()
+            return { status: true, message: "User registered Successfully" }
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
-    login = async () => {
 
+
+    loginUser = async (requestData: LoginType) => {
+        try {
+
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     getUser = async () => {
-
+        try {
+            let getUser = await User.find()
+            return { status: true, data: getUser }
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
 
     getUserDetail = async () => {
 
     }
 
+}
+
+export type RegisterType = {
+    name: string,
+    password: string,
+    email: string
+}
+
+export type LoginType = {
+    email: String,
+    password: String,
 }
