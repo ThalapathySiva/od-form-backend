@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { StaffService } from "../services/staff-services";
-import { RegisterType } from "../services/user-services";
+import { LoginType, RegisterType } from "../services/user-services";
 
 export class StaffController {
 
@@ -13,7 +13,9 @@ export class StaffController {
     }
 
     loginStaff = async (req: Request, res: Response) => {
-
+        let loginData: LoginType = req.body;
+        const loginResponse = await this.service.loginStaff(loginData);
+        res.send(loginResponse)
     }
 
     getStaff = async (req: Request, res: Response) => {

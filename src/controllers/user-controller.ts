@@ -1,6 +1,6 @@
 import { Response, Request } from 'express'
 import { User } from '../models/user-model';
-import { RegisterType, UserService } from '../services/user-services';
+import { LoginType, RegisterType, UserService } from '../services/user-services';
 
 export class UserController {
 
@@ -14,7 +14,9 @@ export class UserController {
     }
 
     login = async (req: Request, res: Response) => {
-
+        let reqData: LoginType = req.body;
+        const loginResponse = await this.service.loginUser(reqData)
+        res.send(loginResponse)
     }
 
     getUser = async (req: Request, res: Response) => {

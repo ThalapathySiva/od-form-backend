@@ -1,5 +1,5 @@
 import { User } from '../models/user-model'
-
+import *as jwt from 'jsonwebtoken'
 export class UserService {
 
 
@@ -22,7 +22,10 @@ export class UserService {
 
     loginUser = async (requestData: LoginType) => {
         try {
-
+            let user = await User.findOne({ email: requestData.email })
+            if (user == null) return { status: false, token: null }
+            var token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET)
+            return { status: true, token: token }
         }
         catch (e) {
             console.log(e)

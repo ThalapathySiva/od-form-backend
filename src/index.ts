@@ -7,6 +7,7 @@ import *as mongoose from 'mongoose'
 
 
 
+
 const app = express()
 
 /// Middlewares
@@ -26,6 +27,8 @@ mongoose.connection.once("open", () => console.log("DB CONNECTED"))
 /// Routes
 app.use('', userRoute)
 app.use('', staffRoute)
+
+
 
 
 /// Starting Server

@@ -1,5 +1,6 @@
 import { Staff } from '../models/staff-model'
 import { RegisterType, LoginType } from '../services/user-services';
+import *as jwt from 'jsonwebtoken'
 
 export class StaffService {
 
@@ -20,7 +21,10 @@ export class StaffService {
 
     loginStaff = async (requestData: LoginType) => {
         try {
-
+            let user = await Staff.findOne({ email: requestData.email })
+            if (user == null) return { status: false, token: null }
+            var token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET)
+            return { status: true, token: token }
         }
         catch (e) {
             console.log(e)
