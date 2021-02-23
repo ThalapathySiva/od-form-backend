@@ -1,11 +1,16 @@
 import { Staff } from '../models/staff-model'
 import { RegisterType, LoginType } from '../services/user-services';
 import *as jwt from 'jsonwebtoken'
+import { ValidateHelper } from '../utils/validate-helper';
 
 export class StaffService {
 
     registerStaff = async (requestData: RegisterType) => {
         try {
+            let registerValidateResponse = await ValidateHelper.validateRegisterType(requestData, true)
+            if (!registerValidateResponse['status']) {
+                return registerValidateResponse;
+            }
             let reqStaff = new Staff({
                 name: requestData.name,
                 email: requestData.email,
@@ -21,9 +26,12 @@ export class StaffService {
 
     loginStaff = async (requestData: LoginType) => {
         try {
-            let user = await Staff.findOne({ email: requestData.email })
-            if (user == null) return { status: false, token: null }
-            var token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET)
+            let loginValidateResponse = await ValidateHelper.loginValidateType(requestData, true)
+            if (!loginValidateResponse['status']) {
+                return loginValidateResponse;
+            }
+            let staff = loginValidateResponse['staff']
+            var token = jwt.sign({ user_id: staff.id }, process.env.JWT_SECRET)
             return { status: true, token: token }
         }
         catch (e) {
@@ -41,7 +49,5 @@ export class StaffService {
         }
     }
 
-    getUserDetail = async () => {
 
-    }
 }

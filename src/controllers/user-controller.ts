@@ -24,7 +24,4 @@ export class UserController {
         res.send(getUserResponse)
     }
 
-    getUserDetail = async (req: Request, res: Response) => {
-
-    }
 }

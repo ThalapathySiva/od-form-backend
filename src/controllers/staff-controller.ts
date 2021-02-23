@@ -22,8 +22,4 @@ export class StaffController {
         const getStaffResponse = await this.service.getStaff()
         res.send(getStaffResponse)
     }
-
-    getStaffDetail = async (req: Request, res: Response) => {
-
-    }
 }
