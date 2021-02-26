@@ -1,6 +1,7 @@
 import { User } from '../models/user-model'
 import *as jwt from 'jsonwebtoken'
 import { ValidateHelper } from '../utils/validate-helper'
+import *as bcrypt from 'bcrypt'
 export class UserService {
 
     registerUser = async (requestData: RegisterType) => {
@@ -9,10 +10,12 @@ export class UserService {
             if (!registerValidateResponse['status']) {
                 return registerValidateResponse;
             }
+            const saltRounds = 10;
+            let passwordHash = bcrypt.hashSync(requestData.password, saltRounds);
             let reqUser = new User({
                 name: requestData.name,
                 email: requestData.email,
-                password: requestData.password,
+                password: passwordHash,
                 user_type: 'student',
             })
             let user = await reqUser.save()

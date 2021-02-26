@@ -2,6 +2,7 @@ import { Staff } from '../models/staff-model'
 import { RegisterType, LoginType } from '../services/user-services';
 import *as jwt from 'jsonwebtoken'
 import { ValidateHelper } from '../utils/validate-helper';
+import *as bcrypt from 'bcrypt'
 
 export class StaffService {
 
@@ -11,10 +12,12 @@ export class StaffService {
             if (!registerValidateResponse['status']) {
                 return registerValidateResponse;
             }
+            const saltRounds = 10;
+            let passwordHash = bcrypt.hashSync(requestData.password, saltRounds);
             let reqStaff = new Staff({
                 name: requestData.name,
                 email: requestData.email,
-                password: requestData.password,
+                password: passwordHash,
                 user_type: 'teacher',
             })
             let staff = await reqStaff.save()

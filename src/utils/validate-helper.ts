@@ -3,7 +3,7 @@ import { Staff } from "../models/staff-model";
 import { User } from "../models/user-model";
 import { CreateODType } from "../services/od-services";
 import { LoginType, RegisterType } from "../services/user-services";
-
+import *as bcrypt from 'bcrypt'
 export class ValidateHelper {
     static validateRegisterType = async (registerType: RegisterType, isStaff: Boolean) => {
         let isValidEmail = isStaff ? await Staff.find({ email: registerType.email }).countDocuments() : await User.find({ email: registerType.email }).countDocuments()
@@ -33,8 +33,12 @@ export class ValidateHelper {
         if (loginType.email.trim().length == 0 || loginType.password.trim().length == 0) {
             return { status: false, error: "Values can't be empty" }
         }
-        let user = isStaff ? await Staff.findOne({ email: loginType.email }).findOne({ password: loginType.password }) : await User.findOne({ email: loginType.email }).findOne({ password: loginType.password })
+        let user = isStaff ? await Staff.findOne({ email: loginType.email }) : await User.findOne({ email: loginType.email })
         if (user == null) { return isStaff ? { status: false, error: "Staff not found" } : { status: false, error: "Student not found" } }
+        const match = await bcrypt.compare(loginType.password, user['password']);
+        if (!match) {
+            return { status: false, error: "Invalid credentials" }
+        }
         return isStaff ? { status: true, staff: user } : { status: true, user: user }
     }
 
