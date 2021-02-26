@@ -1,0 +1,82 @@
+import { Od } from "../models/od-model";
+import { Staff } from "../models/staff-model";
+import { ValidateHelper } from "../utils/validate-helper";
+
+export class ODService {
+    createOD = async (requestData: CreateODType) => {
+        try {
+            let createODValidateResponse = await ValidateHelper.oDValidateType(requestData, false)
+            if (!createODValidateResponse['status']) {
+                return createODValidateResponse;
+            }
+            let reqOd = new Od({
+                reason: requestData.reason,
+                from: new Date(requestData.from),
+                to: new Date(requestData.to),
+                staff_id: requestData.staff_id,
+                student_id: requestData.user.user_id,
+                od_status: 'pending',
+            })
+            let od = await reqOd.save()
+            return { status: true, error: "OD registered Successfully" }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    updateOD = async (requestData: CreateODType) => {
+        try {
+            let odUpdateValidateResponse = await ValidateHelper.oDValidateType(requestData, true)
+            if (!odUpdateValidateResponse['status']) {
+                return odUpdateValidateResponse;
+            }
+            let updateOd = await Od.findByIdAndUpdate({
+                _id: requestData.od_id
+            }, {
+                od_status: requestData.od_status
+            })
+            return { status: true, error: "OD updated Successfully" }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    getOD = async (getODType: CreateODType) => {
+        try {
+
+            let staffData = Staff.find({ _id: getODType.user.user })
+            if (staffData != null) {
+                let getOd = await Od.find(
+                    {
+                        staff_id: getODType.user.user_id
+                    }
+                )
+                return { status: true, data: getOd }
+            }
+
+            let getOd = await Od.find(
+                {
+                    student_id: getODType.user.user
+                }
+            )
+            return { status: true, data: getOd }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+}
+
+export type CreateODType = {
+    reason: string,
+    staff_id: string,
+    from: string,
+    to: string,
+    od_status: string,
+    od_id: string,
+    user: any,
+}

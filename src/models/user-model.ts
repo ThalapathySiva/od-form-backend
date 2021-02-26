@@ -1,5 +1,4 @@
 import *as mongoose from 'mongoose'
-
 const userSchema = new mongoose.Schema({
     name: {
         required: true,
@@ -10,8 +9,13 @@ const userSchema = new mongoose.Schema({
     }, password: {
         required: true,
         type: String
+    },
+    user_type: {
+        required: true,
+        type: String
     }
 })
 
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model("Student", userSchema)
+
 export { User }

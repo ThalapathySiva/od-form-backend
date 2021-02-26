@@ -4,7 +4,7 @@ import { userRoute } from './route/user-route'
 import { staffRoute } from './route/staff-route'
 import *as cors from 'cors'
 import *as mongoose from 'mongoose'
-
+import { odRoute } from './route/od-routes';
 
 
 
@@ -21,12 +21,16 @@ mongoose.connect(process.env.DEV_DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false
 })
+
+
 mongoose.connection.once("open", () => console.log("DB CONNECTED"))
 
 /// Routes
 app.use('', userRoute)
 app.use('', staffRoute)
+app.use('', odRoute)
 
 
 

@@ -11,6 +11,10 @@ const staffSchema = new mongoose.Schema({
         required: true,
         type: String,
     },
+    user_type: {
+        required: true,
+        type: String
+    }
 
 })
 

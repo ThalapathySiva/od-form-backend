@@ -3,7 +3,6 @@ import *as jwt from 'jsonwebtoken'
 import { ValidateHelper } from '../utils/validate-helper'
 export class UserService {
 
-
     registerUser = async (requestData: RegisterType) => {
         try {
             let registerValidateResponse = await ValidateHelper.validateRegisterType(requestData, false)
@@ -14,9 +13,10 @@ export class UserService {
                 name: requestData.name,
                 email: requestData.email,
                 password: requestData.password,
+                user_type: 'student',
             })
             let user = await reqUser.save()
-            return { status: true, error: "User registered Successfully" }
+            return { status: true, error: "Student registered Successfully" }
         }
         catch (e) {
             console.log(e)

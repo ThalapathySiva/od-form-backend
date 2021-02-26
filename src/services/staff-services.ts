@@ -15,6 +15,7 @@ export class StaffService {
                 name: requestData.name,
                 email: requestData.email,
                 password: requestData.password,
+                user_type: 'teacher',
             })
             let staff = await reqStaff.save()
             return { status: true, message: "Staff registered Successfully" }
