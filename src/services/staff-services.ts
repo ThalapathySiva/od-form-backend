@@ -8,7 +8,7 @@ export class StaffService {
 
     registerStaff = async (requestData: RegisterType) => {
         try {
-            let registerValidateResponse = await ValidateHelper.validateRegisterType(requestData, true)
+            let registerValidateResponse = await ValidateHelper.validateRegisterType(requestData, true, false)
             if (!registerValidateResponse['status']) {
                 return registerValidateResponse;
             }
@@ -30,7 +30,7 @@ export class StaffService {
 
     loginStaff = async (requestData: LoginType) => {
         try {
-            let loginValidateResponse = await ValidateHelper.loginValidateType(requestData, true)
+            let loginValidateResponse = await ValidateHelper.loginValidateType(requestData, true, false)
             if (!loginValidateResponse['status']) {
                 return loginValidateResponse;
             }

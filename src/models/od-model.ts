@@ -24,6 +24,10 @@ const odSchema = new mongoose.Schema({
     od_status: {
         required: true,
         type: String,
+    },
+    is_granted: {
+        required: true,
+        type: Boolean
     }
 })
 

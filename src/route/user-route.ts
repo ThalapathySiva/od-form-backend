@@ -4,6 +4,7 @@ import { UserService } from "../services/user-services";
 import *as jwt from 'jsonwebtoken'
 import { Staff } from "../models/staff-model";
 import { User } from "../models/user-model";
+import { Admin } from "../models/admin-model";
 
 
 export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +18,8 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
             }
             let staff = await Staff.findOne({ _id: user['user_id'] })
             let student = await User.findOne({ _id: user['user_id'] })
-            if (staff == null && student == null) {
+            let admin = await Admin.findOne({ _id: user['user_id'] })
+            if (staff == null && student == null && admin == null) {
                 res.sendStatus(401)
                 return
             }

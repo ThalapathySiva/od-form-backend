@@ -5,6 +5,7 @@ import { staffRoute } from './route/staff-route'
 import *as cors from 'cors'
 import *as mongoose from 'mongoose'
 import { odRoute } from './route/od-routes';
+import { adminRoute } from './route/admin-routes';
 
 
 
@@ -31,6 +32,7 @@ mongoose.connection.once("open", () => console.log("DB CONNECTED"))
 app.use('', userRoute)
 app.use('', staffRoute)
 app.use('', odRoute)
+app.use('', adminRoute)
 
 
 

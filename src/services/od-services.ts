@@ -1,3 +1,4 @@
+import { Admin } from "../models/admin-model";
 import { Od } from "../models/od-model";
 import { Staff } from "../models/staff-model";
 import { ValidateHelper } from "../utils/validate-helper";
@@ -5,7 +6,7 @@ import { ValidateHelper } from "../utils/validate-helper";
 export class ODService {
     createOD = async (requestData: CreateODType) => {
         try {
-            let createODValidateResponse = await ValidateHelper.oDValidateType(requestData, false)
+            let createODValidateResponse = await ValidateHelper.oDValidateType(requestData, false, false)
             if (!createODValidateResponse['status']) {
                 return createODValidateResponse;
             }
@@ -16,6 +17,7 @@ export class ODService {
                 staff_id: requestData.staff_id,
                 student_id: requestData.user.user_id,
                 od_status: 'pending',
+                is_granted: false,
             })
             let od = await reqOd.save()
             return { status: true, error: "OD registered Successfully" }
@@ -28,14 +30,17 @@ export class ODService {
 
     updateOD = async (requestData: CreateODType) => {
         try {
-            let odUpdateValidateResponse = await ValidateHelper.oDValidateType(requestData, true)
+            let isAdmin = await Admin.findOne({ _id: requestData.user.user_id })
+            let odUpdateValidateResponse = await ValidateHelper.oDValidateType(requestData, true, isAdmin != null)
             if (!odUpdateValidateResponse['status']) {
                 return odUpdateValidateResponse;
             }
+
             let updateOd = await Od.findByIdAndUpdate({
                 _id: requestData.od_id
             }, {
-                od_status: requestData.od_status
+                od_status: requestData.od_status,
+                is_granted: isAdmin != null ? requestData.od_status == 'accepted' ? true : false : false
             })
             return { status: true, error: "OD updated Successfully" }
         }
