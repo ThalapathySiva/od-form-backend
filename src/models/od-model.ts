@@ -17,6 +17,10 @@ const odSchema = new mongoose.Schema({
         required: true,
         type: Date,
     },
+    register_number: {
+        require: true,
+        type: String
+    },
     to: {
         required: true,
         type: Date,

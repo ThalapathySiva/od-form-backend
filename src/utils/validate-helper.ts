@@ -57,6 +57,9 @@ export class ValidateHelper {
             if (createOdType.to == null) {
                 return { status: false, error: "To field is required" }
             }
+            if (createOdType.register_number == null) {
+                return { status: false, error: "Register Number is required" }
+            }
 
             if (createOdType.reason.trim().length == 0) {
                 return { status: false, error: "Values can't be empty" }
@@ -64,7 +67,6 @@ export class ValidateHelper {
             let staff = await Staff.find({ _id: createOdType.staff_id }).countDocuments()
             if (!staff) {
                 return { status: false, error: "Staff Not found" }
-
             }
         }
 

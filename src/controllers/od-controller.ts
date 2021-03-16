@@ -23,4 +23,10 @@ export class ODController {
         res.send(getUserResponse)
     }
 
+    odDetail = async (req: Request, res: Response) => {
+        let id: string = req.params.id
+        const odDetailResponse = await this.service.odDetail(id)
+        res.send(odDetailResponse)
+    }
+
 }

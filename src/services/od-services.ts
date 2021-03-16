@@ -16,6 +16,7 @@ export class ODService {
                 to: new Date(requestData.to),
                 staff_id: requestData.staff_id,
                 student_id: requestData.user.user_id,
+                register_number: requestData.register_number,
                 od_status: 'pending',
                 is_granted: false,
             })
@@ -51,8 +52,7 @@ export class ODService {
 
     getOD = async (getODType: CreateODType) => {
         try {
-
-            let staffData = Staff.find({ _id: getODType.user.user })
+            let staffData = await Staff.findOne({ _id: getODType.user.user_id })
             if (staffData != null) {
                 let getOd = await Od.find(
                     {
@@ -64,7 +64,21 @@ export class ODService {
 
             let getOd = await Od.find(
                 {
-                    student_id: getODType.user.user
+                    student_id: getODType.user.user_id
+                }
+            )
+            return { status: true, data: getOd }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    odDetail = async (id: string) => {
+        try {
+            let getOd = await Od.findOne(
+                {
+                    _id: id
                 }
             )
             return { status: true, data: getOd }
@@ -84,4 +98,5 @@ export type CreateODType = {
     od_status: string,
     od_id: string,
     user: any,
+    register_number: string,
 }
