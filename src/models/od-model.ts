@@ -32,7 +32,10 @@ const odSchema = new mongoose.Schema({
     is_granted: {
         required: true,
         type: Boolean
-    }
+    },
+    staff: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
+    file_url: { type: String },
+    file_mime_type: { type: String }
 })
 
 

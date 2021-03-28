@@ -5,8 +5,9 @@ export class ODController {
 
     constructor(private service: ODService) { }
 
-    createOD = async (req: Request, res: Response) => {
-        let reqData: CreateODType = req.body;
+    createOD = async (req: any, res: Response) => {
+        let reqData: CreateODType = { ...req.body, file: req.files };
+
         const createOdResponse = await this.service.createOD(reqData)
         res.send(createOdResponse)
     }

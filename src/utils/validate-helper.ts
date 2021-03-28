@@ -49,6 +49,9 @@ export class ValidateHelper {
             if (createOdType.from == null) {
                 return { status: false, error: "From field is required" }
             }
+            if (!createOdType.file || createOdType.file.length < 1) {
+                return { status: false, error: "File field is required" }
+            }
             if (createOdType.reason == null) {
                 return { status: false, error: "Reason field is required" }
             } if (createOdType.staff_id == null) {

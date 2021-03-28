@@ -2,6 +2,8 @@ import { Admin } from "../models/admin-model";
 import { Od } from "../models/od-model";
 import { Staff } from "../models/staff-model";
 import { ValidateHelper } from "../utils/validate-helper";
+import { readFileSync } from 'fs'
+import { join } from "path";
 
 export class ODService {
     createOD = async (requestData: CreateODType) => {
@@ -10,6 +12,7 @@ export class ODService {
             if (!createODValidateResponse['status']) {
                 return createODValidateResponse;
             }
+            let staff = await Staff.findOne({ _id: requestData.staff_id })
             let reqOd = new Od({
                 reason: requestData.reason,
                 from: new Date(requestData.from),
@@ -19,6 +22,9 @@ export class ODService {
                 register_number: requestData.register_number,
                 od_status: 'pending',
                 is_granted: false,
+                file_mime_type: requestData.file[0].mimetype,
+                staff: staff,
+                file_url: join(__dirname + '/../../uploads/' + requestData.file[0].filename),
             })
             let od = await reqOd.save()
             return { status: true, error: "OD registered Successfully" }
@@ -59,15 +65,17 @@ export class ODService {
                         staff_id: getODType.user.user_id
                     }
                 )
-                return { status: true, data: getOd }
+                return { status: true, data: getOd.map(this.generateImageRoute) }
             }
 
             let getOd = await Od.find(
                 {
                     student_id: getODType.user.user_id
                 }
-            )
-            return { status: true, data: getOd }
+
+            ).populate("staff", '-password')
+
+            return { status: true, data: getOd.map(this.generateImageRoute) }
         }
         catch (e) {
             console.log(e)
@@ -80,12 +88,18 @@ export class ODService {
                 {
                     _id: id
                 }
-            )
-            return { status: true, data: getOd }
+            ).populate("staff", '-password')
+
+            return { status: true, data: (this.generateImageRoute(getOd)) }
         }
         catch (e) {
             console.log(e)
         }
+    }
+
+    generateImageRoute = (od: any) => {
+        od.file_url = `get_od/files/${od._id}`
+        return od;
     }
 
 }
@@ -99,4 +113,5 @@ export type CreateODType = {
     od_id: string,
     user: any,
     register_number: string,
+    file: any,
 }

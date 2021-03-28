@@ -6,6 +6,7 @@ import *as cors from 'cors'
 import *as mongoose from 'mongoose'
 import { odRoute } from './route/od-routes';
 import { adminRoute } from './route/admin-routes';
+import { upload } from './utils/file-helper';
 
 
 
@@ -14,6 +15,8 @@ const app = express()
 /// Middlewares
 app.use(express.json())
 app.use(cors())
+
+app.use(upload.any());
 
 
 
