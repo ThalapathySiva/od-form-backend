@@ -19,7 +19,7 @@ export class UserService {
                 user_type: 'student',
             })
             let user = await reqUser.save()
-            return { status: true, error: "Student registered Successfully" }
+            return { status: false, error: "Student registered Successfully" }
         }
         catch (e) {
             console.log(e)

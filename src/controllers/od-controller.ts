@@ -7,13 +7,12 @@ export class ODController {
 
     createOD = async (req: any, res: Response) => {
         let reqData: CreateODType = { ...req.body, file: req.files };
-
         const createOdResponse = await this.service.createOD(reqData)
         res.send(createOdResponse)
     }
 
-    updateOD = async (req: Request, res: Response) => {
-        let reqData: CreateODType = req.body;
+    updateOD = async (req: any, res: Response) => {
+        let reqData: CreateODType = { ...req.body, file: req.files };
         const updateOdResponse = await this.service.updateOD(reqData)
         res.send(updateOdResponse)
     }

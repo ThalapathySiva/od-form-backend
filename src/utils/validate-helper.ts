@@ -43,7 +43,7 @@ export class ValidateHelper {
         return isStaff ? { status: true, staff: user } : isAdmin ? { status: true, admin: user } : { status: true, user: user }
     }
 
-    static oDValidateType = async (createOdType: CreateODType, isUpdate: Boolean, isAdmin: Boolean) => {
+    static oDValidateType = async (createOdType: CreateODType, isUpdate: Boolean, isAdmin: Boolean, isUser: Boolean) => {
         if (!isUpdate) {
 
             if (createOdType.from == null) {
@@ -74,6 +74,13 @@ export class ValidateHelper {
         }
 
         if (isUpdate) {
+            if (isUser) {
+                if (createOdType.file == null) {
+                    return { status: false, error: "Certificate is required" }
+                } else {
+                    return { status: true }
+                }
+            }
             if (createOdType.od_status == null) {
                 return { status: false, error: "OD status is required" }
             }

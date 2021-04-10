@@ -34,8 +34,10 @@ const odSchema = new mongoose.Schema({
         type: Boolean
     },
     staff: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
-    file_url: { type: String },
-    file_mime_type: { type: String }
+    brochure_file_url: { type: String },
+    brochure_file_mime_type: { type: String },
+    certificate_file_url: { type: String },
+    certificate_file_mime_type: { type: String }
 })
 
 
