@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { UserController } from "../controllers/user-controller";
 import { UserService } from "../services/user-services";
-import *as jwt from 'jsonwebtoken'
 import { Staff } from "../models/staff-model";
 import { User } from "../models/user-model";
 import { Admin } from "../models/admin-model";
+import *as jwt from 'jsonwebtoken';
 
 
 export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
