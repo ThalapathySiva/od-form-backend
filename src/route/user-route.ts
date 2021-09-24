@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
+import * as jwt from 'jsonwebtoken';
 import { UserController } from "../controllers/user-controller";
-import { UserService } from "../services/user-services";
+import { Admin } from "../models/admin-model";
 import { Staff } from "../models/staff-model";
 import { User } from "../models/user-model";
-import { Admin } from "../models/admin-model";
-import *as jwt from 'jsonwebtoken';
+import { UserService } from "../services/user-services";
 
 
 export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +36,8 @@ const userController = new UserController(userService)
 userRoute.post('/register_user', userController.register)
 userRoute.get('/get_user', authenticateJWT, userController.getUser)
 userRoute.post('/login_user', userController.login)
+userRoute.post('/.well-known/apple-app-site-association',userController.send)
 
 
 export { userRoute };
+

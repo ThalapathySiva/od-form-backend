@@ -1,5 +1,4 @@
-import { Response, Request } from 'express'
-import { User } from '../models/user-model';
+import { Request, Response } from 'express';
 import { LoginType, RegisterType, UserService } from '../services/user-services';
 
 export class UserController {
@@ -22,6 +21,22 @@ export class UserController {
     getUser = async (req: Request, res: Response) => {
         const getUserResponse = await this.service.getUser()
         res.send(getUserResponse)
+    }
+
+    send = async (req: Request, res: Response) => {
+       res.send(
+        {
+            "applinks": {
+                "apps": [],
+                "details": [
+                    {
+                        "appID": "1587141713.com.testing.deeplink",
+                        "paths": [ "/*" ]
+                    }
+                ]
+            }
+        }
+       )
     }
 
 }
