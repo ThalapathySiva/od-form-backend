@@ -24,7 +24,7 @@ export class UserController {
     }
 
     send = async (req: Request, res: Response) => {
-       res.send(
+       res.json(
         {
             "applinks": {
                 "apps": [],
