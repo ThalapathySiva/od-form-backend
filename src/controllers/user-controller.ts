@@ -23,7 +23,7 @@ export class UserController {
         res.send(getUserResponse)
     }
 
-    send = async (req: Request, res: Response) => {
+    appleAssociatedDomain = async (req: Request, res: Response) => {
        res.json(
         {
             "applinks": {
