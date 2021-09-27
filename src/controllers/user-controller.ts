@@ -27,15 +27,24 @@ export class UserController {
        res.json(
         {
             "applinks": {
-                "apps": [],
                 "details": [
-                    {
-                        "appID": "1587141713.com.testing.deeplink",
-                        "paths": [ "/*" ]
-                    }
-                ]
-            }
-        }
+                     {
+                       "appIDs": [ "1587141713.com.testing.deeplink" ],
+                       "components": [
+                         
+                         {
+                            "/": "/user/*",
+                            "comment": "Matches any URL whose path starts with /user/"
+                         },
+                         
+                       ]
+                     }
+                 ]
+             },
+             "webcredentials": {
+                "apps": [ "1587141713.com.testing.deeplink" ]
+             },
+          }
        )
     }
 
