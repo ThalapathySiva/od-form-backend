@@ -36,8 +36,6 @@ const userController = new UserController(userService)
 userRoute.post('/register_user', userController.register)
 userRoute.get('/get_user', authenticateJWT, userController.getUser)
 userRoute.post('/login_user', userController.login)
-userRoute.get('/.well-known/apple-app-site-association',userController.appleAssociatedDomain)
-
 
 export { userRoute };
 

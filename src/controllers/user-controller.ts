@@ -22,25 +22,4 @@ export class UserController {
         const getUserResponse = await this.service.getUser()
         res.send(getUserResponse)
     }
-
-    appleAssociatedDomain = async (req: Request, res: Response) => {
-       res.json(
-        {
-            "applinks": {
-                "apps": [],
-                "details": [
-                     {
-                       "appIDs": ["1587141713.com.testing.deeplink"],
-                       "components": [
-                         {
-                            "/": "/user/*"
-                         }
-                       ]
-                     }
-                 ]
-             }
-          }
-       )
-    }
-
 }
